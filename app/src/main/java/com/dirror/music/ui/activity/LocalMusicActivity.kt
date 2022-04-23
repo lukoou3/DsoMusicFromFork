@@ -1,10 +1,14 @@
 package com.dirror.music.ui.activity
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
@@ -19,9 +23,11 @@ import com.dirror.music.ui.base.BaseActivity
 import com.dirror.music.ui.dialog.SongMenuDialog
 import com.dirror.music.ui.playlist.SongSearchActivity
 import com.dirror.music.ui.playlist.SongSearchTransmit
+import com.dirror.music.util.parse
 import com.dirror.music.util.runOnMainThread
 import com.dirror.music.util.toast
 import kotlin.concurrent.thread
+
 
 /**
  * 本地音乐
@@ -97,6 +103,46 @@ class LocalMusicActivity : BaseActivity() {
                     }
                 }
             }
+
+
+            filterFilePath.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    val keywords = filterFilePath.text.toString() + "/"
+                    localMusicViewModel.songList.value?.let { songList ->
+                        val keyArrayList = java.util.ArrayList<StandardSongData>()
+                        songList.forEach {
+                            val key = it.localInfo?.data?:""
+                            if (keywords in key) {
+                                keyArrayList.add(it)
+                            }
+                        }
+                        songAdapter.submitList(keyArrayList)
+                    }
+                    print(keywords)
+                }
+            })
+
+//            filterFilePath.setOnClickListener {
+//                val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                //intent.setType(“image/*”);//选择图片
+//                //intent.setType(“audio/*”); //选择音频
+//                //intent.setType(“video/*”); //选择视频 （mp4 3gp 是android支持的视频格式）
+//                //intent.setType(“video/*;image/*”);//同时选择视频和图片
+//                intent.type = "*/*" //无类型限制
+//                intent.addCategory(Intent.CATEGORY_OPENABLE)
+//                startActivityForResult(intent, 1)
+//
+//                thread {
+//                    localMusicViewModel.songList.value?.let { it2 ->
+//                        SongSearchTransmit.songList = it2
+//                        runOnMainThread {
+//                            startActivity(Intent(this@LocalMusicActivity, SongSearchActivity::class.java))
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 
@@ -147,6 +193,16 @@ class LocalMusicActivity : BaseActivity() {
             }
         }
     }
+
+/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {//是否选择，没选择就不会继续
+            data?.let {
+                val uri = it.data
+                print(uri)
+            }
+        }
+    }*/
 
 //    thread {
 //        SongSearchTransmit.songList = songList

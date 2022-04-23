@@ -38,6 +38,7 @@ import android.graphics.PorterDuffColorFilter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.*
 import android.view.animation.LinearInterpolator
 import android.widget.SeekBar
@@ -59,6 +60,7 @@ import com.dirror.music.databinding.ActivityPlayerBinding
 import com.dirror.music.music.local.MyFavorite
 import com.dirror.music.music.standard.data.SOURCE_LOCAL
 import com.dirror.music.music.standard.data.SOURCE_NETEASE
+import com.dirror.music.service.MusicService
 import com.dirror.music.service.base.BaseMediaService
 import com.dirror.music.ui.base.SlideBackActivity
 import com.dirror.music.ui.dialog.PlayerMenuMoreDialog
@@ -70,6 +72,8 @@ import com.dirror.music.util.asColor
 import com.dirror.music.util.asDrawable
 import com.dirror.music.util.colorAlpha
 import com.dso.ext.colorMix
+import java.sql.Date
+import java.sql.Timestamp
 
 /**
  * PlayerActivity
@@ -334,6 +338,21 @@ class PlayerActivity : SlideBackActivity() {
                     SoundEffectDialog(this@PlayerActivity, this@PlayerActivity).show()
                 }
             }
+
+            // 跳过开头结尾
+            /*skipProgresStartEnd?.setOnClickListener {
+                singleClick {
+                    SoundEffectDialog(this@PlayerActivity, this@PlayerActivity).show()
+                }
+            }*/
+
+            // 倍速
+            /*songSpeed?.setOnClickListener {
+                singleClick {
+                    SoundEffectDialog(this@PlayerActivity, this@PlayerActivity).show()
+                }
+            }*/
+
             // 更多菜单
             ivMore.setOnClickListener {
                 singleClick {
@@ -474,10 +493,17 @@ class PlayerActivity : SlideBackActivity() {
                 binding.seekBar.max = it
                 binding.ttvDuration.setText(it)
             })
+            var lastTs = System.currentTimeMillis()
             // 进度的观察
             progress.observe(this@PlayerActivity, {
                 binding.seekBar.progress = it
                 binding.ttvProgress.setText(it)
+                //Log.e("Test", "####"+ Timestamp(System.currentTimeMillis()) +"#####:"+it)
+                val ts = System.currentTimeMillis()
+                if(ts - lastTs >= 2000){
+                    App.mmkv.encode(Config.SERVICE_RECOVER_PROGRESS, it)
+                    lastTs = ts
+                }
                 handler.sendEmptyMessageDelayed(MSG_PROGRESS, DELAY_MILLIS)
                 // 更新歌词播放进度
                 binding.lyricView.updateTime(it.toLong())

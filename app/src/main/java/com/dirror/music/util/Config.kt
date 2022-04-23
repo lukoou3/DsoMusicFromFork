@@ -68,6 +68,12 @@ object Config {
     /* 服务保存的当前歌曲进度 */
     const val SERVICE_RECOVER_PROGRESS = "service_recover_progress"
 
+    /* 倍速 */
+    const val SONG_SPEED = "song_speed"
+
+    /* 跳过开头 */
+    const val SONG_SKIP_START = "song_skip_start"
+
     /* 魅族状态栏歌词 */
     const val MEIZU_STATUS_BAR_LYRIC = "boolean_meizu_status_bar_lyric"
 

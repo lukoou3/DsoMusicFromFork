@@ -15,6 +15,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:text="@string/local_music" >
 
+        <EditText
+            android:singleLine="true"
+            android:id="@+id/filterFilePath"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text=""
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="60dp"
+            android:gravity="center_vertical|center"
+            android:textColor="@color/colorSubTextForeground"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivSearch"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/ivSearch"
             android:layout_width="56dp"
@@ -28,6 +44,7 @@
             android:contentDescription="@string/search" />
 
     </com.dirror.music.widget.TitleBarLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:overScrollMode="never"

@@ -55,4 +55,106 @@
             app:srcCompat="@drawable/ic_baseline_remove_circle_24" />
     </com.dirror.music.widget.ItemLayout>
 
+    <com.dirror.music.widget.ItemLayout
+        android:id="@+id/itemSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:itemType="item_no"
+        app:text="倍速">
+
+        <ImageView
+            android:id="@+id/ivIncreaseSpeed"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="16dp"
+            android:alpha="0.72"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_circle_24" />
+
+        <TextView
+            android:id="@+id/tvSpeed"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorSubTextForeground"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivIncreaseSpeed"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDecreaseSpeed"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:alpha="0.72"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvSpeed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_remove_circle_24" />
+    </com.dirror.music.widget.ItemLayout>
+
+    <com.dirror.music.widget.ItemLayout
+        android:id="@+id/itemSkipStart"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:itemType="item_no"
+        app:text="跳过开头">
+
+        <ImageView
+            android:id="@+id/ivIncreaseSkipStart2"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="16dp"
+            android:alpha="0.72"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_circle_24" />
+
+        <ImageView
+            android:id="@+id/ivIncreaseSkipStart"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:alpha="0.72"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivIncreaseSkipStart2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_circle_24" />
+
+        <TextView
+            android:id="@+id/tvSkipStart"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/colorSubTextForeground"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivIncreaseSkipStart"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivDecreaseSkipStart"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:alpha="0.72"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvSkipStart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_remove_circle_24" />
+
+        <ImageView
+            android:id="@+id/ivDecreaseSkipStart2"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:alpha="0.72"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivDecreaseSkipStart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_remove_circle_24" />
+    </com.dirror.music.widget.ItemLayout>
+
 </LinearLayout>

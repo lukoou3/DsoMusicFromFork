@@ -89,10 +89,12 @@ class MusicService : BaseMediaService() {
     private var mediaSessionCallback: MediaSessionCompat.Callback? = null
 
     /* 默认播放速度，0f 表示暂停 */
-    private var speed = 1F
+    private var speed = mmkv.decodeFloat(Config.SONG_SPEED, 1F)
 
     /* 默认音高 */
     private var pitch = 1F
+
+    private var skipStart = mmkv.decodeInt(Config.SONG_SKIP_START, 0)
 
     /* 音高等级 */
     private var pitchLevel = 0
@@ -221,6 +223,12 @@ class MusicService : BaseMediaService() {
                 }
 
                 musicController.mediaPlayer.start()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // 定位
+                    //musicController.mediaPlayer.seekTo(30000)
+                    //倍速
+                    musicController.mediaPlayer.setPlaybackParams(PlaybackParams().setSpeed(speed))
+                }
                 musicController.isPlaying().value = musicController.mediaPlayer.isPlaying
                 musicController.sendMusicBroadcast()
                 updateMediaSession()
@@ -383,7 +391,7 @@ class MusicService : BaseMediaService() {
             songData.value = song
             // 保存当前播放音乐
             mmkv.encode(Config.SERVICE_CURRENT_SONG, song)
-            Log.e(TAG, "onDestroy: 成功保存歌曲恢复到 mmkv：${song.name}")
+            //Log.e(TAG, "onDestroy: 成功保存歌曲恢复到 mmkv：${song.name}")
 
             // MediaPlayer 重置
             mediaPlayer.reset()
@@ -432,6 +440,7 @@ class MusicService : BaseMediaService() {
                         setOnCompletionListener(this@MusicController) // 歌曲完成后的回调
                         setOnErrorListener(this@MusicController)
                         prepareAsync()
+
                     }
                 }
             }
@@ -449,11 +458,14 @@ class MusicService : BaseMediaService() {
             Log.i(TAG, "onPrepared")
             isPrepared = true
             this.play()
+            // 跳过, 定位
+            this.setProgress(skipStart * 1000)
             if (recover) {
                 recover = false
                 this.pause()
-                this.setProgress(0)
-                // this.setProgress(recoverProgress)
+                print(recoverProgress)
+                // this.setProgress(0)
+                this.setProgress(recoverProgress)
             }
             sendMusicBroadcast()
 
@@ -683,6 +695,8 @@ class MusicService : BaseMediaService() {
 
         override fun getSpeed(): Float = speed
 
+        override fun getSkipStart(): Int = skipStart
+
         override fun getPitchLevel(): Int = pitchLevel
 
         override fun increasePitchLevel() {
@@ -707,6 +721,38 @@ class MusicService : BaseMediaService() {
             }
         }
 
+        override fun increaseSpeedLevel() {
+            /*if(speed + 0.1F <= 3){
+                speed += 0.1F
+            }*/
+            if((speed * 10).toInt() + 1 <= 30){
+                speed = ((speed * 10).toInt() + 1).toFloat() / 10
+                setPlaybackSpeedParams()
+            }
+        }
+
+        override fun decreaseSpeedLevel() {
+            /*if(speed - 0.1F >= 0.5F){
+                speed -= 0.1F
+            }*/
+            if((speed * 10).toInt() - 1 >= 5){
+                speed = ((speed * 10).toInt() - 1).toFloat() / 10
+                setPlaybackSpeedParams()
+            }
+        }
+
+        override fun increaseSkipStart(skip: Int) {
+            skipStart += skip
+        }
+
+        override fun decreaseSkipStart(skip: Int) {
+            if(skipStart - skip >= 0){
+                skipStart -= skip
+            }else{
+                skipStart = 0
+            }
+        }
+
         private fun setPlaybackParams() {
             if (isPrepared) {
                 mediaPlayer.let {
@@ -715,6 +761,22 @@ class MusicService : BaseMediaService() {
                             val playbackParams = it.playbackParams
                             // playbackParams.speed = speed // 0 表示暂停
                             playbackParams.pitch = pitch
+                            it.playbackParams = playbackParams
+                        }
+                    } catch (e: Exception) {
+
+                    }
+                }
+            }
+        }
+
+        private fun setPlaybackSpeedParams() {
+            if (isPrepared) {
+                mediaPlayer.let {
+                    try {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            val playbackParams = it.playbackParams
+                            playbackParams.speed = speed
                             it.playbackParams = playbackParams
                         }
                     } catch (e: Exception) {

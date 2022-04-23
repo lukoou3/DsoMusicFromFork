@@ -7,6 +7,7 @@ import android.media.audiofx.AudioEffect
 import com.dirror.music.App
 import com.dirror.music.databinding.DialogSoundEffectBinding
 import com.dirror.music.ui.base.BaseBottomSheetDialog
+import com.dirror.music.util.Config
 import com.dirror.music.util.toast
 
 class SoundEffectDialog(context: Context, private val activity: Activity): BaseBottomSheetDialog(context) {
@@ -22,6 +23,8 @@ class SoundEffectDialog(context: Context, private val activity: Activity): BaseB
     override fun initView() {
         speed = App.musicController.value?.getSpeed() ?: 1f
         refreshPitch()
+        refreshSpeed()
+        refreshSkipStart()
     }
 
     override fun initListener() {
@@ -48,6 +51,34 @@ class SoundEffectDialog(context: Context, private val activity: Activity): BaseB
                 App.musicController.value?.decreasePitchLevel()
                 refreshPitch()
             }
+            ivIncreaseSpeed.setOnClickListener {
+                App.musicController.value?.increaseSpeedLevel()
+                refreshSpeed()
+            }
+            ivDecreaseSpeed.setOnClickListener {
+                App.musicController.value?.decreaseSpeedLevel()
+                refreshSpeed()
+            }
+
+            ivIncreaseSkipStart.setOnClickListener {
+                App.musicController.value?.increaseSkipStart(1)
+                refreshSkipStart()
+            }
+            ivIncreaseSkipStart2.setOnClickListener {
+                App.musicController.value?.increaseSkipStart(10)
+                refreshSkipStart()
+            }
+
+            ivDecreaseSkipStart.setOnClickListener {
+                App.musicController.value?.decreaseSkipStart(1)
+                refreshSkipStart()
+            }
+            ivDecreaseSkipStart2.setOnClickListener {
+                App.musicController.value?.decreaseSkipStart(10)
+                refreshSkipStart()
+            }
+
+
         }
     }
 
@@ -58,4 +89,16 @@ class SoundEffectDialog(context: Context, private val activity: Activity): BaseB
         binding.tvPitch.text = App.musicController.value?.getPitchLevel().toString()
     }
 
+    /**
+     * 刷新 Pitch
+     */
+    private fun refreshSpeed() {
+        binding.tvSpeed.text = App.musicController.value?.getSpeed().toString()
+        App.musicController.value?.let{ App.mmkv.encode(Config.SONG_SPEED, it.getSpeed()) }
+    }
+
+    private fun refreshSkipStart() {
+        binding.tvSkipStart.text = App.musicController.value?.getSkipStart().toString()
+        App.musicController.value?.let{ App.mmkv.encode(Config.SONG_SKIP_START, it.getSkipStart()) }
+    }
 }

@@ -105,6 +105,8 @@ interface MusicControllerInterface {
      */
     fun getSpeed(): Float
 
+    fun getSkipStart(): Int
+
     /**
      * 获取音高等级
      */
@@ -119,6 +121,20 @@ interface MusicControllerInterface {
      * 降调
      */
     fun decreasePitchLevel()
+
+    /**
+     * 升调
+     */
+    fun increaseSpeedLevel()
+
+    /**
+     * 降调
+     */
+    fun decreaseSpeedLevel()
+
+    fun increaseSkipStart(skip: Int)
+
+    fun decreaseSkipStart(skip: Int)
 
     /**
      * 开始播放

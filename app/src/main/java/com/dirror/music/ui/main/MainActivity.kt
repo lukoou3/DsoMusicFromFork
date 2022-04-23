@@ -144,6 +144,7 @@ class MainActivity : BaseActivity() {
             }
         }
 
+        // 切换目录
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.my)
