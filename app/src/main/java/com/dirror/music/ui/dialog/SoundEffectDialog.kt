@@ -10,6 +10,11 @@ import com.dirror.music.ui.base.BaseBottomSheetDialog
 import com.dirror.music.util.Config
 import com.dirror.music.util.toast
 
+/**
+ * 均衡器底部弹框
+ * 本来构造函数应该和TimingOffDialog一样的，就是这里面用了音频控制面板，需要传入Activity
+ * 和TimingOffDialog基本一样
+ */
 class SoundEffectDialog(context: Context, private val activity: Activity): BaseBottomSheetDialog(context) {
 
     private val binding = DialogSoundEffectBinding.inflate(layoutInflater)
