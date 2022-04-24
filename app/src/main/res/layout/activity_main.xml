@@ -138,6 +138,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <!--使用DrawerLayout可以实现左边的设置侧边栏，layout_gravity="start" 左边，NavigationView是左边抽屉设置的实现-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="300dp"

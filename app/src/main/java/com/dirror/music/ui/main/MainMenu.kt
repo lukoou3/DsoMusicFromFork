@@ -24,6 +24,10 @@ import com.dirror.music.ui.main.viewmodel.MainViewModel
 import com.dirror.music.util.Secure
 import com.dirror.music.util.compose.textDp
 
+/**
+ * 网上有NavigationView抽屉菜单配置方式的例子
+ * 这个里面代码我现在的水平完全看不懂是用什么实现的，不过能看出来代码的意思，不知道用的什么技术。在这上面加个选项还是可以的。
+ */
 @Composable
 fun MainMenu(activity: Activity, mainViewModel: MainViewModel) {
     val statusBarHeight = mainViewModel.statusBarHeight.observeAsState().value
@@ -36,6 +40,7 @@ fun MainMenu(activity: Activity, mainViewModel: MainViewModel) {
     ) {
         RoundedColumn {
             MenuItem(resId = R.drawable.ic_settings, title = "设置") {
+                // 打开这个页面：SettingsActivity
                 App.activityManager.startSettingsActivity(activity)
             }
             MenuItem(resId = R.drawable.ic_feedback, title = "反馈") {

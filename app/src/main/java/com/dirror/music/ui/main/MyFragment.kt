@@ -55,7 +55,7 @@ class MyFragment : BaseFragment() {
     private lateinit var myPlaylistAdapter: MyPlaylistAdapter
 
     override fun initView() {
-
+        // MyFragment 页 User 适配器
         myFragmentUserAdapter = MyFragmentUserAdapter() {
             if (User.uid == 0L) {
                 App.activityManager.startLoginActivity(requireActivity())
@@ -64,6 +64,7 @@ class MyFragment : BaseFragment() {
             }
         }
 
+        // 我的歌单适配器，歌单列表显示，传的参数是点击的回调函数
         myPlaylistAdapter = MyPlaylistAdapter {
             if (myFragmentViewModel.userPlaylistList.value?.size ?: 0 > 0) {
                 if (it == myFragmentViewModel.userPlaylistList.value?.get(0)) {
@@ -80,10 +81,13 @@ class MyFragment : BaseFragment() {
             }
         }
 
+        // 我的图标适配器
         val myFragmentIconAdapter = MyFragmentIconAdapter(requireContext())
 
+        // 空行?
         val blankAdapter = BlankAdapter(64.dp())
 
+        // 把这几个连起来，还真够复杂的
         val concatAdapter = ConcatAdapter(myFragmentUserAdapter, myFragmentIconAdapter, myPlaylistAdapter, blankAdapter)
 
         rvMy.layoutManager = LinearLayoutManager(requireContext())

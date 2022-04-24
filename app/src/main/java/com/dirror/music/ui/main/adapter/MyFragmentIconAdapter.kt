@@ -20,6 +20,10 @@ import com.dirror.music.ui.playlist.TAG_LOCAL_MY_FAVORITE
 import com.dirror.music.util.AnimationUtil
 import com.dirror.music.util.ErrorCode
 
+/**
+ * 首页我的页面
+ * 这里面几个图标用到了点击实现透明300ms的动画
+ */
 class MyFragmentIconAdapter(val context: Context): RecyclerView.Adapter<MyFragmentIconAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -42,6 +46,10 @@ class MyFragmentIconAdapter(val context: Context): RecyclerView.Adapter<MyFragme
         holder.apply {
             clLocal.setOnClickListener {
                 AnimationUtil.click(it)
+                /**
+                 * 这里面也是调用的context.startActivity(Intent(context, LocalMusicActivity::class.java))
+                 * 搞了个封装，我还以为这里用了两种方法打开页面
+                 */
                 startLocalMusicActivity(context)
             }
             // 我喜欢的音乐

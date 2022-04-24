@@ -60,6 +60,7 @@ import kotlin.concurrent.thread
 
 /**
  * MainActivity
+ * 主页面
  */
 class MainActivity : BaseActivity() {
 

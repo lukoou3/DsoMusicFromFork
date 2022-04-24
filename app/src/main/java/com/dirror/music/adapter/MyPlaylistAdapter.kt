@@ -42,12 +42,14 @@ class MyPlaylistAdapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        // list每个item的创建显示
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_playlist, parent, false)
         return ViewHolder(view, itemClickListener)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // list每个item的具体显示，设置item的标题、背景图等
         with(holder) {
             val playlist = getItem(position)
             selectPlaylist = playlist
