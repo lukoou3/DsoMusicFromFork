@@ -494,7 +494,7 @@ class PlayerActivity : SlideBackActivity() {
                 binding.ttvDuration.setText(it)
             })
             var lastTs = System.currentTimeMillis()
-            // 进度的观察
+            // 进度的观察, this@PlayerActivity获取PlayerActivity类的引用，这里传了两个匿名函数
             progress.observe(this@PlayerActivity, {
                 binding.seekBar.progress = it
                 binding.ttvProgress.setText(it)

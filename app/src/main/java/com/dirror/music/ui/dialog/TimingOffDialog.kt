@@ -16,6 +16,12 @@ import com.dirror.music.ui.player.PlayerViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.util.concurrent.TimeUnit
 
+/**
+ * 定时关闭底部弹框
+ * BottomSheetDialog是 Android 6.0 推出的新控件, 底部弹框使用这个就足够了，用起来比较方便
+ *      这里面选择选型后调用了dismiss()方法，dismiss用来销毁弹出框是Dialog类的方法
+ * dialog_timing_off里使用了自定义的widget[com.dirror.music.widget.RightView]，感觉还是挺不错的，类似的可以参照
+ */
 class TimingOffDialog (context: Context) : BottomSheetDialog(context, R.style.style_default_dialog){
     private var binding: DialogTimingOffBinding = DialogTimingOffBinding.inflate(layoutInflater)
 
